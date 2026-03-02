@@ -143,7 +143,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (!isLoggedIn) {
         if (!isPublic) {
           const redirectUrl = new URL("/signin", nextUrl.origin);
-          redirectUrl.searchParams.append("callbackUrl", nextUrl.href);
+          redirectUrl.searchParams.append("callbackUrl", nextUrl.pathname + nextUrl.search);
           return Response.redirect(redirectUrl);
         } else {
           return true;
