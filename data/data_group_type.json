@@ -1,0 +1,62 @@
+[
+  {
+    "value": "Department",
+    "label": "Department"
+  },
+  {
+    "value": "Frame",
+    "label": "Frame"
+  },
+  {
+    "value": "Engine",
+    "label": "Engine"
+  },
+  {
+    "value": "Mission",
+    "label": "Mission"
+  },
+  {
+    "value": "Variant",
+    "label": "Variant"
+  },
+  {
+    "value": "Model",
+    "label": "Model"
+  },
+  {
+    "value": "Plant",
+    "label": "Plant"
+  },
+  {
+    "value": "Family",
+    "label": "Family"
+  },
+  {
+    "value": "Type",
+    "label": "Type"
+  },
+  {
+    "value": "Source",
+    "label": "Source"
+  },
+  {
+    "value": "Nature",
+    "label": "Nature"
+  },
+  {
+    "value": "Combination",
+    "label": "Combination"
+  },
+  {
+    "value": "Product Group",
+    "label": "Product Group"
+  },
+  {
+    "value": "Product Category",
+    "label": "Product Category"
+  },
+  { 
+    "value": "Story Group",
+    "label": "Story Group"
+  }
+]

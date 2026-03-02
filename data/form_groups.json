@@ -1,0 +1,14 @@
+[
+    {
+        "value": "Agent",
+        "label": "agent"
+    },
+    {
+        "value": "Analytic Assistant",
+        "label": "analytic-assistant"
+    },
+    {
+        "value": "Chat Forms",
+        "label": "chatforms"
+    }
+]

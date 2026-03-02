@@ -1,0 +1,80 @@
+[
+    {
+      "value": "Inventory Ledger Data Upload",
+      "label": "Inventory Ledger Data Upload"
+    },
+    {
+      "value": "Raw BOM Data Upload",
+      "label": "Raw BOM Data Upload"
+    },
+    {
+      "value": "Final BOM Data Upload",
+      "label": "Final BOM Data Upload"
+    },
+    {
+      "value": "Invoice Data Upload",
+      "label": "Invoice Data Upload"
+    },
+    {
+      "value": "Stock Data Upload",
+      "label": "Stock Data Upload"
+    },
+    {
+      "value": "Import Invoice Upload",
+      "label": "Import Invoice Upload"
+    },
+    {
+      "value": "Import Invoice Parts Upload",
+      "label": "Import Invoice Parts Upload"
+    },
+    {
+      "value": "Month Stock Upload",
+      "label": "Month Stock Upload"
+    }
+    ,
+    {
+      "value": "Data Upload",
+      "label": "Data Upload"
+    },
+    {
+      "value": "Production Data Upload",
+      "label": "Production Data Upload"
+    },
+    {
+      "value": "Sales Data Upload",
+      "label": "Sales Data Upload"
+    },
+    {
+      "value": "Master Data Upload",
+      "label": "Master Data Upload"
+    },
+    {
+      "value": "Ledger Data Upload",
+      "label": "Ledger Data Upload"
+    },
+    {
+      "value": "User Data Upload",
+      "label": "User Data Upload"
+    },
+    {
+      "value": "Order Data Upload",
+      "label": "Order Data Upload"
+    },
+    {
+      "value": "Items Data Upload",
+      "label": "Items Data Upload"
+    },
+    {
+      "value": "Products",
+      "label": "Products"
+    },
+    {
+      "value": "Masters Data Upload",
+      "label": "Masters Data Upload"
+    },
+    {
+      "value": "Setups Data Upload",
+      "label": "Setups Data Upload"
+    }
+    
+]

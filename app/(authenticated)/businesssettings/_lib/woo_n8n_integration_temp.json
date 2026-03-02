@@ -1,0 +1,561 @@
+{
+  "name": "DEV woocommerce triggers V2",
+  "nodes": [
+    {
+      "parameters": {
+        "event": "customer.created"
+      },
+      "id": "f40600f0-03c6-42c0-aa5f-1c2b20f6cdf0",
+      "name": "Customer create",
+      "type": "n8n-nodes-base.wooCommerceTrigger",
+      "typeVersion": 1,
+      "position": [620, 260],
+      "webhookId": "29d1fb04-0791-452a-b197-e5a5f7861a06",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "event": "customer.updated"
+      },
+      "id": "7f4ce631-3fc1-4d63-a7fe-8bbf53aa6107",
+      "name": "Customer update",
+      "type": "n8n-nodes-base.wooCommerceTrigger",
+      "typeVersion": 1,
+      "position": [620, 460],
+      "webhookId": "95e36c37-fec7-4e38-a9cc-bf8b7db7f37f",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "event": "customer.deleted"
+      },
+      "id": "fb19598f-314c-4d4a-9eab-7e50f25b566a",
+      "name": "Customer delete",
+      "type": "n8n-nodes-base.wooCommerceTrigger",
+      "typeVersion": 1,
+      "position": [620, 720],
+      "webhookId": "8d2f4f37-8934-42cf-9f91-b90ca7fba7e4",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "event": "order.created"
+      },
+      "id": "1b489c0f-4a01-4203-9d32-e9ea76798dff",
+      "name": "Ordre create",
+      "type": "n8n-nodes-base.wooCommerceTrigger",
+      "typeVersion": 1,
+      "position": [620, 980],
+      "webhookId": "c422a899-6d83-4aad-bb31-77c381c0f471",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "event": "order.updated"
+      },
+      "id": "e3e1feaa-8798-4241-bff8-9dd0a2f1e251",
+      "name": "Order update",
+      "type": "n8n-nodes-base.wooCommerceTrigger",
+      "typeVersion": 1,
+      "position": [620, 1180],
+      "webhookId": "13776796-324f-4b5c-9226-d15946c10c41",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "event": "product.created"
+      },
+      "id": "6c2f6637-99b7-423a-93d1-85bae0958ea1",
+      "name": "Product create",
+      "type": "n8n-nodes-base.wooCommerceTrigger",
+      "typeVersion": 1,
+      "position": [620, 1700],
+      "webhookId": "da7c3c68-d089-4921-87eb-44866878c5a4",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "event": "order.deleted"
+      },
+      "id": "2dd4dba2-c2ca-48b5-af42-0471ffb2093c",
+      "name": "Order Delete",
+      "type": "n8n-nodes-base.wooCommerceTrigger",
+      "typeVersion": 1,
+      "position": [620, 1440],
+      "webhookId": "343adb98-9999-46a5-adce-a2cab80e7afb",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "event": "product.updated"
+      },
+      "id": "5566a048-4d90-4ff6-882d-a7d33b3fac17",
+      "name": "Product update",
+      "type": "n8n-nodes-base.wooCommerceTrigger",
+      "typeVersion": 1,
+      "position": [620, 1900],
+      "webhookId": "45ebe59b-c391-49d9-be83-68327bfcd5db",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "event": "product.deleted"
+      },
+      "id": "d266a652-5e66-49df-8722-94df8d6cfbc4",
+      "name": "Product delete",
+      "type": "n8n-nodes-base.wooCommerceTrigger",
+      "typeVersion": 1,
+      "position": [620, 2160],
+      "webhookId": "b9a5044e-d2f2-4af8-8c48-bd2bdcb7f636",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n\"identifier\": \"woocommerce-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": null,\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.date_created }}\",\n  \"updated_date\": \"{{ $json.date_modified }}\",\n  \"data_source_name\": \"woocommerce\",\n  \"for_business_code\": \"<business_code>\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"customer_id\": {{ $json.id }},\n  \"customer_code\": null,\n  \"customer_name\": \"{{ $json.first_name }} {{ $json.last_name }}\",\n  \"customer_ref_no\": null,\n  \"customer_number\": null,\n  \"company_name\": \"{{ $json.billing.company }}\",\n  \"company_number\": null,\n  \"registration_number\": null,\n  \"customer_registration_date\": null,\n  \"onboard_date\": \"{{ $json.date_created }}\",\n  \"offboard_data\": null,\n  \"customer_category\": null,\n  \"customer_type\": null,\n  \"tagline\": null,\n  \"logo_file\": \"{{ $json.avatar_url }}\",\n  \"primary_phone_number\": \"{{ $json.billing.phone }}\",\n  \"secondary_phone_number\": null,\n  \"office_phone_number\": null,\n  \"email\": \"{{ $json.email }}\",\n  \"secondary_email\": null,\n  \"whatsapp_contact\": null,\n  \"fax_number\": null,\n  \"door_number\": null,\n  \"address_one\": \"{{ $json.billing.address_1 }}\",\n  \"address_two\": \"{{ $json.billing.address_2 }}\",\n  \"city\": \"{{ $json.billing.city }}\",\n  \"state_region\": \"{{ $json.billing.state }}\",\n  \"country\": \"{{ $json.billing.country }}\",\n  \"postal_code\": \"{{ $json.billing.postcode }}\",\n  \"latitude\": null,\n  \"longitude\": null,\n  \"location_name\": \"{{ $json.billing.city }}\",\n  \"customer_overview\": null,\n  \"shipping_door_number\": null,\n  \"shipping_address_one\": \"{{ $json.shipping.address_1 }}\",\n  \"shipping_address_two\": \"{{ $json.shipping.address_2 }}\",\n  \"shipping_city\": \"{{ $json.shipping.city }}\",\n  \"shipping_state\": \"{{ $json.shipping.state }}\",\n  \"shipping_country\": \"{{ $json.shipping.country }}\",\n  \"shipping_postal_code\": \"{{ $json.shipping.postcode }}\",\n  \"shipping_latitude\": null,\n  \"shipping_longitude\": null,\n  \"shipping_location_name\": \"{{ $json.shipping.city }}\",\n  \"last_order_date\": null,\n  \"last_order_amount\": null\n}",
+        "options": {}
+      },
+      "id": "f294d4a5-2151-423d-a69f-2db57a6eec22",
+      "name": "Customer remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [840, 360]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/customers?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates"
+            },
+            {
+              "name": "apikey",
+              "value": "Beare <postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "ca5606cf-1f13-4ae2-8af8-5e2f266e05ab",
+      "name": "Customer upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1060, 360]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=<postgrest_url>/customers?identifier=eq.woocommerce-<business_number>-{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "Beare <postgrest_auth>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e638f4fd-67fe-4f9b-b977-7b5085ee4ba3",
+      "name": "Customer Delete",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [840, 720]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"identifier\": \"woocommerce-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": \"{{ $json.status }}\",\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.date_created }}\",\n  \"updated_date\": \"{{ $json.date_modified }}\",\n  \"data_source_name\": \"woocommerce\",\n  \"for_business_code\": \"<business_code>\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"ref_order_id\": null,\n  \"order_code\": \"{{ $json.order_key }}\",\n  \"order_number\": \"{{ $json.id }}\",\n  \"order_status\": \"{{ $json.status }}\",\n  \"ref_order_no\": null,\n  \"ref_vendor_name\": null,\n  \"order_date\": \"{{ $json.date_created }}\",\n  \"customer_id\": \"{{ $json?.customer_id ? 'woocommerce-<business_number>-' + $json?.customer_id : '' }}\",\n  \"customer_code\": \"{{ $json.billing?.email }}\",\n  \"customer_name\": \"{{ $json.billing?.first_name }} {{ $json.billing?.last_name }}\",\n  \"customer_ref_no\": null,\n  \"order_narration\": \"{{ $json.customer_note }}\",\n  \"order_amount\": \"{{ $json.total }}\",\n  \"order_tax\": \"{{ $json.total_tax }}\",\n  \"order_discount\": \"{{ $json.discount_total }}\",\n  \"order_shipment\": \"{{ $json.shipping_total }}\",\n  \"order_payment_amount\": \"{{ $json.total }}\",\n  \"payment_method\": \"{{ $json.payment_method }}\",\n  \"shipment_method\": \"{{ $json.shipping_method }}\",\n  \"delivery_date\": null,\n  \"offer_code\": null,\n  \"offer_amount\": null,\n  \"product_count\": \"{{ $json.line_items.length }}\",\n  \"total_quantity\": \"{{ $json.line_items.reduce((sum, item) => sum + item.quantity, 0) }}\",\n  \"currency\": \"{{ $json.currency }}\",\n  \"billing_address\": \"{{ JSON.stringify($json.billing).replace(/\"/g, '\\\\\"') }}\",\n  \"shipping_address\": \"{{ JSON.stringify($json.shipping).replace(/\"/g, '\\\\\"') }}\",\n  \"order_note\": \"{{ $json.customer_note }}\",\n  \"order_remarks\": \"{{ $json.customer_note }}\",\n  \"order_status_log\": null,\n  \"shipping_address_2\": null,\n  \"billing_address_2\": null,\n  \"order_tag\": null,\n  \"line_items\": {{ $json.line_items }},\n  \"shipping_lines\": {{ $json.shipping_lines }},\n  \"customer_locale\": null\n}\n",
+        "options": {}
+      },
+      "id": "7ac58d34-b69b-4af5-ac04-6c67cc362124",
+      "name": "Order remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [840, 1080]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/order?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates, return=representation"
+            },
+            {
+              "name": "apikey",
+              "value": "Beare <postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "a7e67b8b-45ec-4f2d-8c1b-140f972fd2f8",
+      "name": "Order upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1060, 1080]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=<postgrest_url>/order?identifier=eq.woocommerce-<business_number>-{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "Beare <postgrest_auth>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c668f729-00a8-4653-aa5e-42d312f42a22",
+      "name": "Order Delete1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [840, 1440]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=<postgrest_url>/ecomproduct?identifier=eq.woocommerce-<business_number>-{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "Beare <postgrest_auth>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "94550d20-4d64-4bf8-9507-0e6d2319b44d",
+      "name": "Product Delete",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [840, 2160]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/ecomproduct?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates"
+            },
+            {
+              "name": "apikey",
+              "value": "Beare <postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "2a7c9a6a-c968-42fc-ab48-2911bc96cf00",
+      "name": "Product upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1060, 1800]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n\"identifier\": \"woocommerce-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": \"{{ $json.status }}\",\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.date_created }}\",\n  \"updated_date\": \"{{ $json.date_modified }}\",\n  \"data_source_name\": \"woocommerce\",\n  \"for_business_code\": \"<business_code>\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"product_name\": \"{{ $json.name }}\",\n  \"product_code\": \"{{ $json.sku }}\",\n  \"product_number\": null,\n  \"product_ref_number\": null,\n  \"product_vendor_code\": null,\n  \"short_description\": \"{{ $json.short_description.replace(/\\n/g, '\\\\n').replace(/\"/g, '\\\\\"') }}\",\n  \"description\": \"{{ $json.description.replace(/\\n/g, '\\\\n').replace(/\"/g, '\\\\\"') }}\",\n  \"unit_of_measure\": null,\n  \"product_category\" : \"{{ ($json.categories.map(item => item.name)).join(', ') }}\",\n  \"product_catalog\": null,\n  \"product_catalogs\": null,\n  \"related_products\": \"{{ $json.related_ids }}\"\n\n,\n\n  \"offer_status\": null,\n\"inventory_management\": \"{{ $json.manage_stock }}\",\n  \"inventory_count\": {{ $json.stock_quantity || null }},\n\n\n  \"icon_image\": \"{{ $json.images[0]?.src || '' }}\",\n\n\n  \"small_image\": null,\n  \"large_image\": \"{{ $json.images[0]?.src || '' }}\",\n  \"variants\": {{ $json.variations }},\n  \"list_price\": \"{{ $json.regular_price }}\",\n  \"price\": \"{{ $json.price }}\",\n  \"tags\" : \"{{ ($json.tags.map(item => item.name)).join(', ') }}\",\n  \"metafields\": \"{{ $json.meta_data }}\",\n  \"inventory_policy\": null,\n  \"discount\": {{ $json.sale_price || 0 }}\n}\n",
+        "options": {}
+      },
+      "id": "6977196c-0195-44fe-8e4c-74bc4940eca8",
+      "name": "Product remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [840, 1800]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/order_product?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates, return=representation"
+            },
+            {
+              "name": "apikey",
+              "value": "Beare <postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "66dadb2c-1b37-4f6b-b97d-75afd6db3c17",
+      "name": "Order Products upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1720, 1080]
+    },
+    {
+      "parameters": {
+        "jsCode": "if($input.first().json?.line_items && Array.isArray($input.first().json?.line_items)){\n return $input.first().json.line_items\n}\nreturn [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1280, 1080],
+      "id": "fe4a2371-818b-441d-927f-da6423b7b076",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"status\": \"{{ $('Order remap').item.json.status }}\",\n  \"ref_user_id\": \"{{ $('Order remap').item.json.customer_id }}\",\n  \"ref_user_name\": \"{{ $('Order remap').item.json.customer_name }}\",\n  \"created_date\": \"{{ $('Order remap').item.json.order_date }}\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"ref_order_no\": \"{{ $('Order remap').item.json.order_number }}\",\n  \"order_date\": \"{{ $('Order remap').item.json.order_date }}\",\n\n  \"customer_code\": \"{{ $('Order remap').item.json.customer_code }}\",\n  \"customer_ref_no\": \"{{ $('Order remap').item.json.customer_ref_no }}\",\n  \"order_narration\": \"{{ $('Order remap').item.json.order_narration }}\",\n  \"order_amount\": \"{{ $('Order remap').item.json.order_amount }}\",\n  \"order_tax\": \"{{ $('Order remap').item.json.order_tax }}\",\n  \"order_discount\": \"{{ $('Order remap').item.json.order_discount }}\",\n  \"order_shipment\": \"{{ $('Order remap').item.json.order_shipment }}\",\n  \"order_payment_amount\": \"{{ $('Order remap').item.json.order_payment_amount }}\",\n  \"payment_method\": \"{{ $('Order remap').item.json.payment_method }}\",\n  \"shipment_method\": \"{{ $('Order remap').item.json.shipment_method }}\",\n  \"offer_code\": \"{{ $json.name }}\",\n  \"offer_amount\": \"{{ $json.total }}\",\n  \"product_count\": \"{{ $json.quantity }}\",\n  \"total_quantity\": \"{{ $('Order remap').item.json.total_quantity }}\",\n  \"currency\": \"{{ $('Order remap').item.json.currency }}\",\n  \"billing_address\": \"{{ $('Order remap').item.json.billing_address.replace(/\"/g, '\\\\\"') }}\",\n  \"shipping_address\": \"{{ $('Order remap').item.json.shipping_address.replace(/\"/g, '\\\\\"') }}\",\n  \"order_note\": \"{{ $('Order remap').item.json.order_note }}\",\n  \"order_remarks\": \"{{ $('Order remap').item.json.order_remarks }}\",\n  \"line_items\": {{$('Order remap').item.json.line_items}},\n  \"identifier\": \"woocommerce-<business_number>-{{ $('Order remap').item.json.source_id }}-{{ $json.id }}\",\n  \"parent_identifier\": \"woocommerce-<business_number>-{{ $('Order remap').item.json.source_id }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1500, 1080],
+      "id": "19d6a9b5-6ec0-46c9-8fb1-12bc527ed40b",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "Customer create": {
+      "main": [
+        [
+          {
+            "node": "Customer remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ordre create": {
+      "main": [
+        [
+          {
+            "node": "Order remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order update": {
+      "main": [
+        [
+          {
+            "node": "Order remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer update": {
+      "main": [
+        [
+          {
+            "node": "Customer remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer remap": {
+      "main": [
+        [
+          {
+            "node": "Customer upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer delete": {
+      "main": [
+        [
+          {
+            "node": "Customer Delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order remap": {
+      "main": [
+        [
+          {
+            "node": "Order upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Delete": {
+      "main": [
+        [
+          {
+            "node": "Order Delete1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product delete": {
+      "main": [
+        [
+          {
+            "node": "Product Delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product create": {
+      "main": [
+        [
+          {
+            "node": "Product remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product update": {
+      "main": [
+        [
+          {
+            "node": "Product remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product remap": {
+      "main": [
+        [
+          {
+            "node": "Product upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order upsert": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Order Products upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

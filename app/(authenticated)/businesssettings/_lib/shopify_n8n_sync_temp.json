@@ -1,0 +1,373 @@
+{
+  "name": "DEV shopify sync triggers V2",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"identifier\": \"shopify-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": \"{{ $json.fulfillment_status }}\",\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.created_at }}\",\n  \"updated_date\": \"{{ $json.updated_at }}\",\n  \"data_source_name\": \"shopify\",\n  \"for_business_code\": \"<business_code>\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"ref_order_id\": null,\n  \"order_code\": \"{{ $json.order_number }}\",\n  \"order_number\": \"{{ $json.order_number }}\",\n  \"order_status\": \"{{ $json.financial_status }}\",\n  \"ref_order_no\": null,\n  \"ref_vendor_name\": null,\n  \"order_date\": \"{{ $json.created_at }}\",\n  \"delivery_date\": null,\n  \"customer_id\": \"{{ $json?.customer?.default_address?.customer_id ? 'shopify-<business_number>-' + $json?.customer?.default_address?.customer_id : '' }}\",\n  \"customer_code\": null,\n  \"customer_name\": \"{{ $json.customer.first_name  || '' }} {{ $json.customer.last_name || '' }}\",\n  \"customer_ref_no\": null,\n  \"order_narration\": \"{{ $json.note }}\",\n  \"order_amount\": \"{{ $json.subtotal_price }}\",\n  \"order_tax\": \"{{ $json.total_tax }}\",\n  \"order_discount\": \"{{ $json.total_discounts }}\",\n  \"order_shipment\": \"{{ $json.total_shipping_price_set.shop_money.amount || '' }}\",\n  \"order_payment_amount\": \"{{ $json.total_price }}\",\n  \"payment_method\": \"{{ $json.payment_gateway_names[0]  || '' }}\",\n  \"shipment_method\": \"{{ $json.fulfillments[0].tracking_company   || '' }}\",\n  \"offer_code\": \"{{ $json.discount_codes }}\",\n  \"offer_amount\": null,\n  \"product_count\": \"{{ $json.line_items.length }}\",\n  \"total_quantity\": \"{{ $json.line_items.reduce((sum, item) => sum + item.quantity, 0) }}\",\n  \"currency\": \"{{ $json.currency }}\",\n  \"billing_address\": \"{{  JSON.stringify($json.billing_address).replace(/\"/g, '\\\\\"') }}\",\n  \"shipping_address\": \"{{ JSON.stringify($json.shipping_address).replace(/\"/g, '\\\\\"') }}\",\n  \"shipping_address_2\": \"{{ JSON.stringify($json.shipping_address).replace(/\"/g, '\\\\\"') }}\",\n  \"billing_address_2\": \"{{ JSON.stringify($json.billing_address).replace(/\"/g, '\\\\\"') }}\",\n  \"order_note\": \"{{ $json.note }}\",\n  \"order_remarks\": null,\n  \"order_status_log\": null,\n  \"order_tag\": \"{{ $json.tags }}\",\n  \"line_items\": {{ $json.line_items }},\n  \"shipping_lines\": {{ $json.shipping_lines }},\n  \"customer_locale\": \"{{ $json.customer_locale }}\"\n}",
+        "options": {}
+      },
+      "id": "eafa20f3-df69-4203-9a1d-4ace926e4339",
+      "name": "Order remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1220, 1140]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/order?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates, return=representation"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "4775c4fe-083f-4f84-8de3-245fda384856",
+      "name": "Order upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1440, 1140],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 100,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/ecomproduct?on_conflict=identifier&select=id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates, return=representation"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "224983cd-7df0-4050-b168-f0857ca1d219",
+      "name": "Product upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1440, 1515],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 100,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n\"identifier\": \"shopify-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": \"{{ $json.status }}\",\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.created_at }}\",\n  \"updated_date\": \"{{ $json.updated_at }}\",\n  \"data_source_name\": \"shopify\",\n  \"for_business_code\": \"<business_code>\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"product_name\": \"{{ $json.title }}\",\n  \"product_code\": null,\n  \"product_number\": null,\n  \"product_ref_number\": null,\n  \"product_vendor_code\": \"{{ $json.vendor }}\",\n  \"short_description\": null,\n  \"description\": \"{{ $json.body_html }}\",\n  \"unit_of_measure\": null,\n  \"product_category\": \"{{ $json.product_type }}\",\n  \"product_catalog\": null,\n  \"product_catalogs\": null,\n  \"related_products\": null,\n  \"offer_status\": null,\n  \"inventory_count\": \"{{ $json.variants.reduce((sum, item) => sum + item.inventory_quantity, 0) }}\",\n  \"end_date\": null,\n  \"icon_image\": null,\n  \"small_image\": null,\n  \"large_image\": \"{{ $json.image.src }}\",\n  \"variants\": {{ $json.variants }},\n  \"list_price\": {{ $json.variants.map(item => item.price)?.[0] || null }},\n  \"discount\": null,\n  \"tags\": \"{{ $json.tags }}\",\n  \"inventory_policy\": {{ $json.variants.map(item => item.inventory_policy) }}\n}\n",
+        "options": {}
+      },
+      "id": "95c8c102-0366-4e7d-ae24-ab9ebfb5e26b",
+      "name": "Product remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1220, 1440]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/order_product?on_conflict=identifier&select=id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates, return=representation"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "6952de18-c8da-4f2e-8548-7e0eed0af54f",
+      "name": "Order Products upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2100, 1215],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 100,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const combinedLineItems = [];\n\nfor (const item of $input.all()) {\n  if (item.json?.line_items && Array.isArray(item.json.line_items)) {\n    // combinedLineItems.push(...item.json.line_items);\n    for (const lineItem of item.json.line_items) {\n      const lineItemWithOrigin = {\n        ...lineItem,\n        origin: item.json\n      };\n      combinedLineItems.push(lineItemWithOrigin);\n    }\n  }\n}\n\n// Return the single list containing all line_items\nreturn combinedLineItems;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1660, 1140],
+      "id": "2153c004-74e1-4484-83b0-6ba18955eaaa",
+      "name": "Code"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [560, 1365],
+      "id": "c597cb51-7782-4664-8d87-bdeb8b9a2d55",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"status\": \"{{ $json.origin.status }}\",\n  \"ref_user_id\": \"{{ $json.origin.customer_id }}\",\n  \"ref_user_name\": \"{{ $json.origin.customer_name }}\",\n  \"created_date\": \"{{ $json.origin.order_date }}\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"ref_order_no\": \"{{ $json.origin.order_number }}\",\n  \"order_date\": \"{{ $json.origin.order_date }}\",\n  \"customer_code\": \"{{ $json.origin.customer_code }}\",\n  \"customer_ref_no\": \"{{ $json.origin.customer_ref_no }}\",\n  \"order_narration\": \"{{ $json.origin.order_narration }}\",\n  \"order_amount\": \"{{ $json.origin.order_amount }}\",\n  \"order_tax\": \"{{ $json.origin.order_tax }}\",\n  \"order_discount\": \"{{ $json.origin.order_discount }}\",\n  \"order_shipment\": \"{{ $json.origin.order_shipment }}\",\n  \"order_payment_amount\": \"{{ $json.origin.order_payment_amount }}\",\n  \"payment_method\": \"{{ $json.origin.payment_method }}\",\n  \"shipment_method\": \"{{ $json.origin.shipment_method }}\",\n  \"offer_code\": \"{{ $json.name }}\",\n  \"offer_amount\": \"{{ $json.price_set.shop_money.amount }}\",\n  \"product_count\": \"{{ $json.quantity }}\",\n  \"total_quantity\": \"{{ $json.origin.total_quantity }}\",\n  \"currency\": \"{{ $json.origin.currency }}\",\n  \"billing_address\": \"{{ $json.origin.billing_address.replace(/\"/g, '\\\\\"') }}\",\n  \"shipping_address\": \"{{ $json.origin.shipping_address.replace(/\"/g, '\\\\\"') }}\",\n  \"order_note\": \"{{ $json.origin.order_note }}\",\n  \"order_remarks\": \"{{ $json.origin.order_remarks }}\",\n  \"line_items\": {{$json.origin.line_items}},\n  \"identifier\": \"shopify-<business_number>-{{ $json.origin.source_id }}-{{ $json.id }}\",\n  \"parent_identifier\": \"shopify-<business_number>-{{ $json.origin.source_id }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1880, 1140],
+      "id": "c6116338-073d-453a-8183-d9e7986d04fa",
+      "name": "order product remap"
+    },
+    {
+      "parameters": {
+        "content": "### **shopify data sync**\n**busniess number** : <business_number>\n**shopifyCredentialName** : <shopifyCredentialName>\n**shopifyCredentialID** : <shopifyCredentialID>",
+        "height": 120,
+        "width": 440,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [1720, 1500],
+      "typeVersion": 1,
+      "id": "71e0052b-7ee6-4910-b075-82f29bca3b7c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "operation": "getAll",
+        "limit": 5,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.shopify",
+      "typeVersion": 1,
+      "position": [780, 1215],
+      "id": "056e29c3-b8fc-4f2b-a854-9796b7305607",
+      "name": "Shopify",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "resource": "product",
+        "operation": "getAll",
+        "returnAll": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.shopify",
+      "typeVersion": 1,
+      "position": [780, 1515],
+      "id": "2e636808-9a8a-48f1-bb34-7135a9c2aacf",
+      "name": "Shopify1",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 100,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [1000, 1215],
+      "id": "eb40f3ab-d562-42ac-8502-5a8842714544",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "batchSize": 100,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [1000, 1515],
+      "id": "95a11a1c-70c5-4aff-b121-fed04074a6e1",
+      "name": "Loop Over Items1"
+    }
+  ],
+  "connections": {
+    "Order remap": {
+      "main": [
+        [
+          {
+            "node": "Order upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order upsert": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product upsert": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product remap": {
+      "main": [
+        [
+          {
+            "node": "Product upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Products upsert": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "order product remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Shopify",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Shopify1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "order product remap": {
+      "main": [
+        [
+          {
+            "node": "Order Products upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Shopify": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Shopify1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Order remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Product remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

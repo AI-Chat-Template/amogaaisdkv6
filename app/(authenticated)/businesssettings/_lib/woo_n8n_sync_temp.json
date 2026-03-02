@@ -1,0 +1,547 @@
+{
+  "name": "DEV woocommerce sync triggers V2",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n\"identifier\": \"woocommerce-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": null,\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.date_created }}\",\n  \"updated_date\": \"{{ $json.date_modified }}\",\n  \"data_source_name\": \"woocommerce\",\n  \"for_business_code\": \"<business_code>\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"customer_id\": {{ $json.id }},\n  \"customer_code\": null,\n  \"customer_name\": \"{{ $json.first_name }} {{ $json.last_name }}\",\n  \"customer_ref_no\": null,\n  \"customer_number\": null,\n  \"company_name\": \"{{ $json.billing.company }}\",\n  \"company_number\": null,\n  \"registration_number\": null,\n  \"customer_registration_date\": null,\n  \"onboard_date\": \"{{ $json.date_created }}\",\n  \"offboard_data\": null,\n  \"customer_category\": null,\n  \"customer_type\": null,\n  \"tagline\": null,\n  \"logo_file\": \"{{ $json.avatar_url }}\",\n  \"primary_phone_number\": \"{{ $json.billing.phone }}\",\n  \"secondary_phone_number\": null,\n  \"office_phone_number\": null,\n  \"email\": \"{{ $json.email }}\",\n  \"secondary_email\": null,\n  \"whatsapp_contact\": null,\n  \"fax_number\": null,\n  \"door_number\": null,\n  \"address_one\": \"{{ $json.billing.address_1 }}\",\n  \"address_two\": \"{{ $json.billing.address_2 }}\",\n  \"city\": \"{{ $json.billing.city }}\",\n  \"state_region\": \"{{ $json.billing.state }}\",\n  \"country\": \"{{ $json.billing.country }}\",\n  \"postal_code\": \"{{ $json.billing.postcode }}\",\n  \"latitude\": null,\n  \"longitude\": null,\n  \"location_name\": \"{{ $json.billing.city }}\",\n  \"customer_overview\": null,\n  \"shipping_door_number\": null,\n  \"shipping_address_one\": \"{{ $json.shipping.address_1 }}\",\n  \"shipping_address_two\": \"{{ $json.shipping.address_2 }}\",\n  \"shipping_city\": \"{{ $json.shipping.city }}\",\n  \"shipping_state\": \"{{ $json.shipping.state }}\",\n  \"shipping_country\": \"{{ $json.shipping.country }}\",\n  \"shipping_postal_code\": \"{{ $json.shipping.postcode }}\",\n  \"shipping_latitude\": null,\n  \"shipping_longitude\": null,\n  \"shipping_location_name\": \"{{ $json.shipping.city }}\",\n  \"last_order_date\": null,\n  \"last_order_amount\": null\n}",
+        "options": {}
+      },
+      "id": "b5b41bc6-7138-49d6-b69e-d69a6053058b",
+      "name": "Customer remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -300,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/customers?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "69f69928-9dba-47b4-a771-3420e902d712",
+      "name": "Customer upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        475
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 100,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"identifier\": \"woocommerce-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": \"{{ $json.status }}\",\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.date_created }}\",\n  \"updated_date\": \"{{ $json.date_modified }}\",\n  \"data_source_name\": \"woocommerce\",\n  \"for_business_code\": \"<business_code>\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"ref_order_id\": null,\n  \"order_code\": \"{{ $json.order_key }}\",\n  \"order_number\": \"{{ $json.id }}\",\n  \"order_status\": \"{{ $json.status }}\",\n  \"ref_order_no\": null,\n  \"ref_vendor_name\": null,\n  \"order_date\": \"{{ $json.date_created }}\",\n  \"customer_id\": \"{{ $json?.customer_id ? 'woocommerce-<business_number>-' + $json?.customer_id : '' }}\",\n  \"customer_code\": \"{{ $json.billing?.email }}\",\n  \"customer_name\": \"{{ $json.billing?.first_name }} {{ $json.billing?.last_name }}\",\n  \"customer_ref_no\": null,\n  \"order_narration\": \"{{ $json.customer_note }}\",\n  \"order_amount\": \"{{ $json.total }}\",\n  \"order_tax\": \"{{ $json.total_tax }}\",\n  \"order_discount\": \"{{ $json.discount_total }}\",\n  \"order_shipment\": \"{{ $json.shipping_total }}\",\n  \"order_payment_amount\": \"{{ $json.total }}\",\n  \"payment_method\": \"{{ $json.payment_method }}\",\n  \"shipment_method\": \"{{ $json.shipping_method }}\",\n  \"delivery_date\": null,\n  \"offer_code\": null,\n  \"offer_amount\": null,\n  \"product_count\": \"{{ $json.line_items.length }}\",\n  \"total_quantity\": \"{{ $json.line_items.reduce((sum, item) => sum + item.quantity, 0) }}\",\n  \"currency\": \"{{ $json.currency }}\",\n  \"billing_address\": \"{{ JSON.stringify($json.billing).replace(/\"/g, '\\\\\"') }}\",\n  \"shipping_address\": \"{{ JSON.stringify($json.shipping).replace(/\"/g, '\\\\\"') }}\",\n  \"order_note\": \"{{ $json.customer_note }}\",\n  \"order_remarks\": \"{{ $json.customer_note }}\",\n  \"order_status_log\": null,\n  \"shipping_address_2\": null,\n  \"billing_address_2\": null,\n  \"order_tag\": null,\n  \"line_items\": {{ $json.line_items }},\n  \"shipping_lines\": {{ $json.shipping_lines }},\n  \"customer_locale\": null\n}\n",
+        "options": {}
+      },
+      "id": "908c7e7f-064a-4197-b28d-b6bf29f21145",
+      "name": "Order remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -300,
+        725
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/order?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates, return=representation"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "01870924-3357-4158-95ff-196d8674bb51",
+      "name": "Order upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        725
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 100,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/ecomproduct?on_conflict=identifier&select=id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates, return=representation"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "def397dd-b372-489d-809c-0c6bd562323b",
+      "name": "Product upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        1100
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 100,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n\"identifier\": \"woocommerce-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": \"{{ $json.status }}\",\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.date_created }}\",\n  \"updated_date\": \"{{ $json.date_modified }}\",\n  \"data_source_name\": \"woocommerce\",\n  \"for_business_code\": \"<business_code>\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"product_name\": \"{{ $json.name }}\",\n  \"product_code\": \"{{ $json.sku }}\",\n  \"product_number\": null,\n  \"product_ref_number\": null,\n  \"product_vendor_code\": null,\n  \"short_description\": \"{{ $json.short_description.replace(/\\n/g, '\\\\n').replace(/\"/g, '\\\\\"') }}\",\n  \"description\": \"{{ $json.description.replace(/\\n/g, '\\\\n').replace(/\"/g, '\\\\\"') }}\",\n  \"unit_of_measure\": null,\n  \"product_category\" : \"{{ ($json.categories.map(item => item.name)).join(', ') }}\",\n  \"product_catalog\": null,\n  \"product_catalogs\": null,\n  \"related_products\": \"{{ $json.related_ids }}\",\n  \"offer_status\": null,\n  \"inventory_management\": \"{{ $json.manage_stock }}\",\n  \"inventory_count\": {{ $json.stock_quantity || null }},\n  \"icon_image\": \"{{ $json.images[0]?.src || '' }}\",\n  \"small_image\": null,\n  \"large_image\": \"{{ $json.images[0]?.src || '' }}\",\n  \"variants\": {{ $json.variations }},\n  \"list_price\": \"{{ $json.regular_price }}\",\n  \"price\": \"{{ $json.price }}\",\n  \"tags\" : \"{{ ($json.tags.map(item => item.name)).join(', ') }}\",\n  \"metafields\": {{ $json.meta_data }},\n  \"inventory_policy\": null,\n  \"discount\": {{ $json.sale_price || 0 }}\n}\n",
+        "options": {}
+      },
+      "id": "9c8e2775-0ad2-4567-b3e7-6662a1a961a8",
+      "name": "Product remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -300,
+        1025
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/order_product?on_conflict=identifier&select=id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates, return=representation"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "fea18783-7bf9-4d00-a00b-57a45fa88228",
+      "name": "Order Products upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        580,
+        800
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 100,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const combinedLineItems = [];\n\nfor (const item of $input.all()) {\n  if (item.json?.line_items && Array.isArray(item.json.line_items)) {\n    // combinedLineItems.push(...item.json.line_items);\n    for (const lineItem of item.json.line_items) {\n      const lineItemWithOrigin = {\n        ...lineItem,\n        origin: item.json\n      };\n      combinedLineItems.push(lineItemWithOrigin);\n    }\n  }\n}\n\n// Return the single list containing all line_items\nreturn combinedLineItems;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        140,
+        725
+      ],
+      "id": "bea74762-23ef-4fa9-9096-acebc4e7571e",
+      "name": "Code"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        800
+      ],
+      "id": "ace028c2-efc7-4f87-b283-e213cb0cd17e",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "order",
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.wooCommerce",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        800
+      ],
+      "id": "289d50cd-00f6-4c2a-8229-df4749e2325f",
+      "name": "WooCommerce",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "customer",
+        "operation": "getAll",
+        "returnAll": true,
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.wooCommerce",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        480
+      ],
+      "id": "bce61e54-4fc8-4670-8873-c96ba65cdda0",
+      "name": "WooCommerce1",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.wooCommerce",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        1100
+      ],
+      "id": "6763b74b-b584-4bc3-b99e-712f481c39f9",
+      "name": "WooCommerce2",
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "<wooCredentialID>",
+          "name": "<wooCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"status\": \"{{ $json.origin.status }}\",\n  \"ref_user_id\": \"{{ $json.origin.customer_id }}\",\n  \"ref_user_name\": \"{{ $json.origin.customer_name }}\",\n  \"created_date\": \"{{ $json.origin.order_date }}\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"ref_order_no\": \"{{ $json.origin.order_number }}\",\n  \"order_date\": \"{{ $json.origin.order_date }}\",\n  \"customer_code\": \"{{ $json.origin.customer_code }}\",\n  \"customer_ref_no\": \"{{ $json.origin.customer_ref_no }}\",\n  \"order_narration\": \"{{ $json.origin.order_narration }}\",\n  \"order_amount\": \"{{ $json.origin.order_amount }}\",\n  \"order_tax\": \"{{ $json.origin.order_tax }}\",\n  \"order_discount\": \"{{ $json.origin.order_discount }}\",\n  \"order_shipment\": \"{{ $json.origin.order_shipment }}\",\n  \"order_payment_amount\": \"{{ $json.origin.order_payment_amount }}\",\n  \"payment_method\": \"{{ $json.origin.payment_method }}\",\n  \"shipment_method\": \"{{ $json.origin.shipment_method }}\",\n  \"offer_code\": \"{{ $json.name }}\",\n  \"offer_amount\": \"{{ $json.total }}\",\n  \"product_count\": \"{{ $json.quantity }}\",\n  \"total_quantity\": \"{{ $json.origin.total_quantity }}\",\n  \"currency\": \"{{ $json.origin.currency }}\",\n  \"billing_address\": \"{{ $json.origin.billing_address.replace(/\"/g, '\\\\\"') }}\",\n  \"shipping_address\": \"{{ $json.origin.shipping_address.replace(/\"/g, '\\\\\"') }}\",\n  \"order_note\": \"{{ $json.origin.order_note }}\",\n  \"order_remarks\": \"{{ $json.origin.order_remarks }}\",\n  \"line_items\": {{$json.origin.line_items}},\n  \"identifier\": \"woocommerce-<business_number>-{{ $json.origin.source_id }}-{{ $json.id }}\",\n  \"parent_identifier\": \"woocommerce-<business_number>-{{ $json.origin.source_id }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        360,
+        725
+      ],
+      "id": "552779d9-9dc9-472f-b809-7c85a4431489",
+      "name": "order product remap",
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "content": "### **Woocommerce data sync**\n**busniess number** : <business_number>\n**wooCredentialName** : <wooCredentialName>\n**wooCredentialID** : <wooCredentialID>",
+        "height": 120,
+        "width": 440,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        260,
+        1100
+      ],
+      "typeVersion": 1,
+      "id": "617cd629-f689-4ccb-8d35-c421a0189bad",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "batchSize": 100,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -520,
+        475
+      ],
+      "id": "2a2d42c7-505a-4c22-9cab-72850cd894ab",
+      "name": "Loop Over Customers"
+    },
+    {
+      "parameters": {
+        "batchSize": 100,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -520,
+        1100
+      ],
+      "id": "37b688ef-dfa0-43b8-8729-e17908d736af",
+      "name": "Loop Over products"
+    },
+    {
+      "parameters": {
+        "batchSize": 100,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -520,
+        800
+      ],
+      "id": "686e935d-f848-4e7f-935f-994151030003",
+      "name": "Loop Over Items1"
+    }
+  ],
+  "connections": {
+    "Customer remap": {
+      "main": [
+        [
+          {
+            "node": "Customer upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer upsert": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Customers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order remap": {
+      "main": [
+        [
+          {
+            "node": "Order upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order upsert": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product upsert": {
+      "main": [
+        [
+          {
+            "node": "Loop Over products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product remap": {
+      "main": [
+        [
+          {
+            "node": "Product upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Products upsert": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "order product remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "WooCommerce2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WooCommerce",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WooCommerce1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WooCommerce": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WooCommerce1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Customers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WooCommerce2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "order product remap": {
+      "main": [
+        [
+          {
+            "node": "Order Products upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Customers": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Customer remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over products": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Product remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Order remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

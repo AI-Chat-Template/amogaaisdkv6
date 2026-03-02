@@ -1,0 +1,217 @@
+"use client";
+
+import { type UserType, CustomerReport, UserRoles } from "../type";
+import type {
+  DataTableAdvancedFilterField,
+  DataTableFilterField,
+  DataTableRowAction,
+} from "@/types";
+import * as React from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+import { DataTable } from "@/components/data-table/data-table";
+import { DataTableAdvancedToolbar } from "@/components/data-table/data-table-advanced-toolbar";
+import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
+import { useDataTable } from "@/hooks/use-data-table";
+import { toSentenceCase } from "@/lib/utils";
+
+import type { getStoreUsers } from "../_lib/queries";
+import { DeleteRecordsDialog } from "./delete-dialog";
+import { useFeatureFlags } from "./feature-flags-provider";
+import { getColumns } from "./table-columns";
+import { RecordsTableFloatingBar } from "./table-floating-bar";
+import { RecordsTableToolbarActions } from "./table-toolbar-actions";
+import { UpdateRecordSheet } from "./update-sheet";
+import { Button } from "@/components/ui/button";
+import { Row, Table } from "@tanstack/react-table";
+import { DataTableViewOptions } from "@/components/data-table/data-table-view-options";
+import { CardsView } from "./view-cards";
+import { Plus } from "lucide-react";
+import { SearchInput } from "@/components/data-table/search-input";
+
+interface UsersTableProps {
+  promises: Promise<[Awaited<ReturnType<typeof getStoreUsers>>]>;
+}
+
+interface ViewOption {
+  value: string;
+  label: string;
+  component: React.ComponentType<{
+    records: CustomerReport[];
+    table: Table<CustomerReport>;
+  }> | null;
+}
+
+export function UsersTable({ promises }: UsersTableProps) {
+  const { featureFlags } = useFeatureFlags();
+
+  const [{ data, pageCount }] = React.use(promises);
+
+  const [rowAction, setRowAction] =
+    React.useState<DataTableRowAction<CustomerReport> | null>(null);
+
+  const columns = React.useMemo(() => getColumns({ setRowAction }), []);
+
+  /**
+   * This component can render either a faceted filter or a search filter based on the `options` prop.
+   *
+   * @prop options - An array of objects, each representing a filter option. If provided, a faceted filter is rendered. If not, a search filter is rendered.
+   *
+   * Each `option` object has the following properties:
+   * @prop {string} label - The label for the filter option.
+   * @prop {string} value - The value for the filter option.
+   * @prop {React.ReactNode} [icon] - An optional icon to display next to the label.
+   * @prop {boolean} [withCount] - An optional boolean to display the count of the filter option.
+   */
+  const filterFields: DataTableFilterField<CustomerReport>[] = [
+    {
+      id: "role",
+      label: "Roles",
+      multiple: false,
+      options: UserRoles.map((role) => ({
+        label: toSentenceCase(role),
+        value: role,
+      })),
+    },
+  ];
+
+  /**
+   * Advanced filter fields for the data table.
+   * These fields provide more complex filtering options compared to the regular filterFields.
+   *
+   * Key differences from regular filterFields:
+   * 1. More field types: Includes 'text', 'multi-select', 'date', and 'boolean'.
+   * 2. Enhanced flexibility: Allows for more precise and varied filtering options.
+   * 3. Used with DataTableAdvancedToolbar: Enables a more sophisticated filtering UI.
+   * 4. Date and boolean types: Adds support for filtering by date ranges and boolean values.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const advancedFilterFields: DataTableAdvancedFilterField<CustomerReport>[] = [];
+
+  const enableAdvancedTable = false;
+  const enableFloatingBar = featureFlags.includes("floatingBar");
+
+  const { table } = useDataTable({
+    data,
+    columns,
+    pageCount,
+    filterFields,
+    enableAdvancedFilter: false,
+    initialState: {
+      sorting: [{ id: "date_last_active", desc: true }],
+      columnPinning: { right: ["actions"] },
+    },
+    getRowId: (originalRow) =>
+      originalRow.user_id
+        ? originalRow.user_id.toString()
+        : originalRow.id.toString(),
+    shallow: false,
+    clearOnDefault: true,
+  });
+
+  const isMobile = useIsMobile();
+  const [view, setView] = React.useState<string>(() => {
+    return isMobile ? "card" : "table";
+  });
+
+  const viewOptions: ViewOption[] = React.useMemo(
+    () => [
+      { value: "table", label: "Table View", component: null },
+      { value: "card", label: "Card View", component: CardsView },
+    ],
+    []
+  );
+
+  const selectedViewOption = React.useMemo(() => {
+    return (
+      viewOptions.find((option) => option.value === view) || viewOptions[0]
+    );
+  }, [view, viewOptions]);
+
+  return (
+    <>
+      <DataTable
+        table={table}
+        floatingBar={
+          enableFloatingBar ? <RecordsTableFloatingBar table={table} /> : null
+        }
+        viewComponent={
+          selectedViewOption?.component !== null ? (
+            <selectedViewOption.component records={data} table={table} />
+          ) : null
+        }
+      >
+        {enableAdvancedTable ? (
+          <DataTableAdvancedToolbar
+            table={table}
+            filterFields={[]}
+            shallow={false}
+            showColumnVisibilitySelect={selectedViewOption?.value === "table"}
+            endContent={
+              <>
+                <DataTableViewOptions
+                  views={viewOptions}
+                  view={view}
+                  setView={setView}
+                />
+                <Button
+                  size="sm"
+                  onClick={() =>
+                    setRowAction({ row: {} as Row<UserType>, type: "new" })
+                  }
+                >
+                  <Plus className="size-4" />
+                  <span className="hidden sm:block">Add</span>
+                </Button>
+              </>
+            }
+          >
+            <RecordsTableToolbarActions table={table} />
+          </DataTableAdvancedToolbar>
+        ) : (
+          <DataTableToolbar
+            table={table}
+            filterFields={filterFields}
+            showColumnVisibilitySelect={selectedViewOption?.value === "table"}
+            startContent={<SearchInput shallow={false} />}
+            endContent={
+              <>
+                <DataTableViewOptions
+                  views={viewOptions}
+                  view={view}
+                  setView={setView}
+                />
+                <Button
+                  size="sm"
+                  onClick={() =>
+                    setRowAction({ row: {} as Row<UserType>, type: "new" })
+                  }
+                >
+                  <Plus className="size-4" />
+                  <span className="hidden sm:block">Add</span>
+                </Button>
+              </>
+            }
+          >
+            <RecordsTableToolbarActions table={table} />
+          </DataTableToolbar>
+        )}
+      </DataTable>
+
+      <UpdateRecordSheet
+        // key={JSON.stringify(rowAction?.row.original || {})}
+        open={rowAction?.type === "update" || rowAction?.type === "new"}
+        isNew={rowAction?.type === "new"}
+        onOpenChange={() => setRowAction(null)}
+        record={rowAction?.row?.original ?? null}
+      />
+      <DeleteRecordsDialog
+        open={rowAction?.type === "delete"}
+        onOpenChange={() => setRowAction(null)}
+        records={rowAction?.row?.original ? [rowAction?.row.original] : []}
+        showTrigger={false}
+        onSuccess={() => rowAction?.row?.toggleSelected(false)}
+      />
+    </>
+  );
+}

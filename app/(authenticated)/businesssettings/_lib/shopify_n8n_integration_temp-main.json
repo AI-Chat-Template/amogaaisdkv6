@@ -1,0 +1,636 @@
+{
+  "name": "DEV shopify triggers V2",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "orders/create"
+      },
+      "id": "34bd4fa5-3c9f-44f7-8c63-ef7e53bf9a78",
+      "name": "Order Created Trigger",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        540,
+        400
+      ],
+      "webhookId": "fde41659-a607-4b41-a674-69dad972d86f",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "orders/updated"
+      },
+      "id": "79a4e553-9ed3-4b8a-855a-ab44f0ee7887",
+      "name": "Order Update Trigger",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        540,
+        600
+      ],
+      "webhookId": "e41353c8-a43f-467d-8270-0ee0fd9938dc",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "orders/delete"
+      },
+      "id": "bed788d3-a823-4b82-b9cb-be902c0bb225",
+      "name": "Order Delete Trigger",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        540,
+        860
+      ],
+      "webhookId": "cc1c4408-5467-4936-93cb-5aa50eaf90e6",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "products/create"
+      },
+      "id": "791c13c7-9f28-48a4-96c3-e9c1ffdea472",
+      "name": "Product Created",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        540,
+        1120
+      ],
+      "webhookId": "6ebff6ca-cecc-45d1-88b0-85e2aa45f660",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "products/delete"
+      },
+      "id": "277ced26-d515-409e-83bb-882d6a2633a4",
+      "name": "Product Deleted",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        540,
+        1580
+      ],
+      "webhookId": "a062599b-77f9-4223-83ea-b6cb1f239e3f",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "products/update"
+      },
+      "id": "330b9120-84f2-453e-a8f9-edae7ea7209a",
+      "name": "Product Updated",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        540,
+        1320
+      ],
+      "webhookId": "30f25e6b-fa99-48b1-981b-b3d713b94a89",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "customers/update"
+      },
+      "id": "be1e148f-76a8-4529-9ecf-8efc7dcd4c3f",
+      "name": "Customer Updated",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        540,
+        -120
+      ],
+      "webhookId": "30ae5b0c-3c93-4190-a045-4102f88cc303",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "customers/delete"
+      },
+      "id": "4ae3904b-6cfd-4610-ab11-85396122e4c6",
+      "name": "Customer Deleted",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        540,
+        140
+      ],
+      "webhookId": "069a28a9-efec-473a-8338-26ca6cd460da",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "topic": "customers/create"
+      },
+      "id": "13b4f1bc-ed76-44bd-ab3e-6eecda5f8a9a",
+      "name": "Customer Created",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [
+        540,
+        -320
+      ],
+      "webhookId": "86930e05-90fa-4f7c-ae7a-130c2f487f14",
+      "credentials": {
+        "shopifyAccessTokenApi": {
+          "id": "<shopifyCredentialID>",
+          "name": "<shopifyCredentialName>"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"identifier\": \"shopify-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": \"{{ $json.state }}\",\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.created_at }}\",\n  \"updated_date\": \"{{ $json.updated_at }}\",\n  \"data_source_name\": \"shopify\",\n  \"for_business_code\": null,\n  \"for_business_name\": null,\n  \"for_business_number\": null,\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"customer_id\": {{ $json.id }},\n  \"customer_code\": null,\n  \"customer_name\": \"{{ $json.first_name }} {{ $json.last_name }}\",\n  \"customer_ref_no\": null,\n  \"customer_number\": null,\n  \"company_name\": \"{{ $json.addresses[0].company }}\",\n  \"company_number\": null,\n  \"registration_number\": null,\n  \"customer_registration_date\": null,\n  \"onboard_date\": \"{{ $json.created_at }}\",\n  \"offboard_data\": null,\n  \"customer_category\": null,\n  \"customer_type\": null,\n  \"tagline\": null,\n  \"logo_file\": null,\n  \"primary_phone_number\": \"{{ $json.phone }}\",\n  \"secondary_phone_number\": null,\n  \"office_phone_number\": null,\n  \"email\": \"{{ $json.email }}\",\n  \"secondary_email\": null,\n  \"whatsapp_contact\": null,\n  \"fax_number\": null,\n  \"door_number\": null,\n  \"address_one\": \"{{ $json.addresses[0].address1 }}\",\n  \"address_two\": \"{{ $json.addresses[0].address2 }}\",\n  \"city\": \"{{ $json.addresses[0].city }}\",\n  \"state_region\": \"{{ $json.addresses[0].province }}\",\n  \"country\": \"{{ $json.addresses[0].country }}\",\n  \"postal_code\": \"{{ $json.addresses[0].zip }}\",\n  \"latitude\": null,\n  \"longitude\": null,\n  \"location_name\": \"{{ $json.addresses[0].city }}\",\n  \"customer_overview\": \"{{ $json.note }}\",\n  \"shipping_door_number\": null,\n  \"shipping_address_one\": \"{{ $json.default_address.address1 }}\",\n  \"shipping_address_two\": \"{{ $json.default_address.address2 }}\",\n  \"shipping_city\": \"{{ $json.default_address.city }}\",\n  \"shipping_state\": \"{{ $json.default_address.province }}\",\n  \"shipping_country\": \"{{ $json.default_address.country }}\",\n  \"shipping_postal_code\": \"{{ $json.default_address.zip }}\",\n  \"shipping_latitude\": null,\n  \"shipping_longitude\": null,\n  \"shipping_location_name\": \"{{ $json.default_address.city }}\",\n  \"last_order_date\": null,\n  \"last_order_amount\": null\n}\n",
+        "options": {}
+      },
+      "id": "b7b12db7-e758-4d1b-a03c-b45cfbb743c7",
+      "name": "Customers Remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        760,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=<postgrest_url>/customers?identifier=eq.shopify-<business_number>-{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3afd0c9f-7480-4980-a4e0-8c8b7427372b",
+      "name": "Delete Customer",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        760,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/customers?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "a38f27f3-92bc-4c38-a5ea-f432b5269412",
+      "name": "Customer upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        980,
+        -220
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n\"identifier\": \"shopify-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": \"{{ $json.status }}\",\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.created_at }}\",\n  \"updated_date\": \"{{ $json.updated_at }}\",\n  \"data_source_name\": \"shopify\",\n  \"for_business_code\": \"<business_code>\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"product_name\": \"{{ $json.title }}\",\n  \"product_code\": null,\n  \"product_number\": null,\n  \"product_ref_number\": null,\n  \"product_vendor_code\": \"{{ $json.vendor }}\",\n  \"short_description\": null,\n  \"description\": \"{{ $json.body_html }}\",\n  \"unit_of_measure\": null,\n  \"product_category\": \"{{ $json.product_type }}\",\n  \"product_catalog\": null,\n  \"product_catalogs\": null,\n  \"related_products\": null,\n  \"offer_status\": null,\n  \"inventory_count\": \"{{ $json.variants.reduce((sum, item) => sum + item.inventory_quantity, 0) }}\",\n  \"end_date\": null,\n  \"icon_image\": null,\n  \"small_image\": null,\n  \"large_image\": \"{{ $json.image.src }}\",\n  \"variants\": {{ $json.variants }},\n  \"list_price\": {{ $json.variants.map(item => item.price)?.[0] || null }},\n  \"discount\": null,\n  \"tags\": \"{{ $json.tags }}\",\n  \"inventory_policy\": {{ $json.variants.map(item => item.inventory_policy) }}\n}\n",
+        "options": {}
+      },
+      "id": "7e8ce4fa-a094-4939-8933-dfc3fa53a352",
+      "name": "Products Remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        760,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/ecomproduct?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "633dca17-79a4-4e6f-9466-ea1a35365a34",
+      "name": "Product upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        980,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=<postgrest_url>/ecomproduct?identifier=eq.shopify-<business_number>-{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ece5234f-6a9b-4d08-8f02-9bf7a5a709b4",
+      "name": "Delete Product",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        760,
+        1580
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"identifier\": \"shopify-<business_number>-{{ $json.id }}\",\n  \"source_id\": \"{{ $json.id }}\",\n  \"status\": \"{{ $json.fulfillment_status }}\",\n  \"created_user_id\": null,\n  \"created_user_name\": null,\n  \"ref_user_id\": null,\n  \"ref_user_name\": null,\n  \"created_date\": \"{{ $json.created_at }}\",\n  \"updated_date\": \"{{ $json.updated_at }}\",\n  \"data_source_name\": \"shopify\",\n  \"for_business_code\": \"<business_code>\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"for_user_id\": null,\n  \"for_user_name\": null,\n  \"ref_order_id\": null,\n  \"order_code\": \"{{ $json.order_number }}\",\n  \"order_number\": \"{{ $json.order_number }}\",\n  \"order_status\": \"{{ $json.financial_status }}\",\n  \"ref_order_no\": null,\n  \"ref_vendor_name\": null,\n  \"order_date\": \"{{ $json.created_at }}\",\n  \"delivery_date\": null,\n  \"customer_id\": \"{{ $json?.customer?.default_address?.customer_id ? 'shopify-<business_number>-' + $json?.customer?.default_address?.customer_id : '' }}\",\n  \"customer_code\": null,\n  \"customer_name\": \"{{ $json.customer.first_name  || '' }} {{ $json.customer.last_name || '' }}\",\n  \"customer_ref_no\": null,\n  \"order_narration\": \"{{ $json.note }}\",\n  \"order_amount\": \"{{ $json.subtotal_price }}\",\n  \"order_tax\": \"{{ $json.total_tax }}\",\n  \"order_discount\": \"{{ $json.total_discounts }}\",\n  \"order_shipment\": \"{{ $json.total_shipping_price_set.shop_money.amount || '' }}\",\n  \"order_payment_amount\": \"{{ $json.total_price }}\",\n  \"payment_method\": \"{{ $json.payment_gateway_names[0]  || '' }}\",\n  \"shipment_method\": \"{{ $json.fulfillments[0].tracking_company   || '' }}\",\n  \"offer_code\": \"{{ $json.discount_codes }}\",\n  \"offer_amount\": null,\n  \"product_count\": \"{{ $json.line_items.length }}\",\n  \"total_quantity\": \"{{ $json.line_items.reduce((sum, item) => sum + item.quantity, 0) }}\",\n  \"currency\": \"{{ $json.currency }}\",\n  \"billing_address\": \"{{  JSON.stringify($json.billing_address).replace(/\"/g, '\\\\\"') }}\",\n  \"shipping_address\": \"{{ JSON.stringify($json.shipping_address).replace(/\"/g, '\\\\\"') }}\",\n  \"shipping_address_2\": \"{{ JSON.stringify($json.shipping_address).replace(/\"/g, '\\\\\"') }}\",\n  \"billing_address_2\": \"{{ JSON.stringify($json.billing_address).replace(/\"/g, '\\\\\"') }}\",\n  \"order_note\": \"{{ $json.note }}\",\n  \"order_remarks\": null,\n  \"order_status_log\": null,\n  \"order_tag\": \"{{ $json.tags }}\",\n  \"line_items\": {{ $json.line_items }},\n  \"shipping_lines\": {{ $json.shipping_lines }},\n  \"customer_locale\": \"{{ $json.customer_locale }}\"\n}",
+        "options": {}
+      },
+      "id": "64c512ee-7026-4926-ba1d-3b701cc6cf58",
+      "name": "Order remap",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        760,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/order?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates, return=representation"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "d3491fc4-aaaa-4ac5-926f-383f39259b47",
+      "name": "Order upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        980,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=<postgrest_url>/order?identifier=eq.shopify-<business_number>-{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "35b93259-8b42-42b7-be0d-44964e2516ee",
+      "name": "Order Delete",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        760,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<postgrest_url>/order_product?on_conflict=identifier",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates, return=representation"
+            },
+            {
+              "name": "<authParam>",
+              "value": "<postgrest_auth>"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "889a6254-5d82-4644-b424-df993480884c",
+      "name": "Order Products upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1640,
+        500
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 100
+    },
+    {
+      "parameters": {
+        "jsCode": "if($input.first().json?.line_items && Array.isArray($input.first().json?.line_items)){\n return $input.first().json.line_items\n}\nreturn [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        500
+      ],
+      "id": "17ffc849-1aeb-4ca5-8f1e-17b83cec4e0f",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"status\": \"{{ $('Order remap').item.json.status }}\",\n  \"ref_user_id\": \"{{ $('Order remap').item.json.customer_id }}\",\n  \"ref_user_name\": \"{{ $('Order remap').item.json.customer_name }}\",\n  \"created_date\": \"{{ $('Order remap').item.json.order_date }}\",\n  \"for_business_name\": \"<business_name>\",\n  \"for_business_number\": \"<business_number>\",\n  \"ref_order_no\": \"{{ $('Order remap').item.json.order_number }}\",\n  \"order_date\": \"{{ $('Order remap').item.json.order_date }}\",\n\n  \"customer_code\": \"{{ $('Order remap').item.json.customer_code }}\",\n  \"customer_ref_no\": \"{{ $('Order remap').item.json.customer_ref_no }}\",\n  \"order_narration\": \"{{ $('Order remap').item.json.order_narration }}\",\n  \"order_amount\": \"{{ $('Order remap').item.json.order_amount }}\",\n  \"order_tax\": \"{{ $('Order remap').item.json.order_tax }}\",\n  \"order_discount\": \"{{ $('Order remap').item.json.order_discount }}\",\n  \"order_shipment\": \"{{ $('Order remap').item.json.order_shipment }}\",\n  \"order_payment_amount\": \"{{ $('Order remap').item.json.order_payment_amount }}\",\n  \"payment_method\": \"{{ $('Order remap').item.json.payment_method }}\",\n  \"shipment_method\": \"{{ $('Order remap').item.json.shipment_method }}\",\n  \"offer_code\": \"{{ $json.name }}\",\n  \"offer_amount\": \"{{ $json.price_set.shop_money.amount }}\",\n  \"product_count\": \"{{ $json.quantity }}\",\n  \"total_quantity\": \"{{ $('Order remap').item.json.total_quantity }}\",\n  \"currency\": \"{{ $('Order remap').item.json.currency }}\",\n  \"billing_address\": \"{{ $('Order remap').item.json.billing_address.replace(/\"/g, '\\\\\"') }}\",\n  \"shipping_address\": \"{{ $('Order remap').item.json.shipping_address.replace(/\"/g, '\\\\\"') }}\",\n  \"order_note\": \"{{ $('Order remap').item.json.order_note }}\",\n  \"order_remarks\": \"{{ $('Order remap').item.json.order_remarks }}\",\n  \"line_items\": {{$('Order remap').item.json.line_items}},\n  \"identifier\": \"shopify-<business_number>-{{ $('Order remap').item.json.source_id }}-{{ $json.id }}\",\n  \"parent_identifier\": \"shopify-<business_number>-{{ $('Order remap').item.json.source_id }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1420,
+        500
+      ],
+      "id": "aa4faf1b-c6d3-4e3c-abcc-03832eaf6c4f",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "Order Created Trigger": {
+      "main": [
+        [
+          {
+            "node": "Order remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Update Trigger": {
+      "main": [
+        [
+          {
+            "node": "Order remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Delete Trigger": {
+      "main": [
+        [
+          {
+            "node": "Order Delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product Created": {
+      "main": [
+        [
+          {
+            "node": "Products Remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product Deleted": {
+      "main": [
+        [
+          {
+            "node": "Delete Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product Updated": {
+      "main": [
+        [
+          {
+            "node": "Products Remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Updated": {
+      "main": [
+        [
+          {
+            "node": "Customers Remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Deleted": {
+      "main": [
+        [
+          {
+            "node": "Delete Customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Created": {
+      "main": [
+        [
+          {
+            "node": "Customers Remap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customers Remap": {
+      "main": [
+        [
+          {
+            "node": "Customer upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Products Remap": {
+      "main": [
+        [
+          {
+            "node": "Product upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order remap": {
+      "main": [
+        [
+          {
+            "node": "Order upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order upsert": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Order Products upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
