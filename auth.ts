@@ -10,22 +10,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
   trustHost: true,
   session: { strategy: "jwt" },
-  
+
   pages: {
     signIn: "/signin",
   },
   providers: [
-     Google({
-    clientId: process.env.GOOGLE_CLIENT_ID!,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-  }),
-     GitHub({
-    clientId: process.env.GITHUB_CLIENT_ID!,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-  }),
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
     Credentials({
       name: "Sign in",
-      id: "credentials",  
+      id: "credentials",
       credentials: {
         email: {
           label: "email",
@@ -55,7 +55,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!user) {
           return null;
         }
-        
+
         const userSessionDTO = getUserSessionDTO(user);
         // console.log("userSessionDTO:"+ userSessionDTO)
         const allowedPaths = await getAllowedPaths(userSessionDTO);
@@ -73,7 +73,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       authorize: async (credentials) => {
-        console.log("Login with User ID",credentials)
+        console.log("Login with User ID", credentials)
         if (!credentials?.userId) {
           return null;
         }
@@ -84,7 +84,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           .eq("user_catalog_id", credentials.userId as string)
           .single();
 
-        console.log("user",user)
+        console.log("user", user)
 
         if (!user) {
           return null;
@@ -95,7 +95,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return { ...userSessionDTO, allowedPaths: allowedPaths };
       },
     }),
-    
+
 
   ],
   callbacks: {
@@ -134,7 +134,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       const isLoggedIn = !!auth?.user;
-      const publicPaths = ["/sign-in", "/sign-up", "/storesignin", "/storesignup","/signin","/(socialAuth)","/signup"];
+      const publicPaths = ["/sign-in", "/sign-up", "/storesignin", "/storesignup", "/signin", "/(socialAuth)", "/signup"];
 
       const isPublic = publicPaths.some((path) =>
         nextUrl.pathname.startsWith(path)
@@ -143,7 +143,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (!isLoggedIn) {
         if (!isPublic) {
           const redirectUrl = new URL("/signin", nextUrl.origin);
-          redirectUrl.searchParams.append("callbackUrl", nextUrl.pathname + nextUrl.search);
+          redirectUrl.searchParams.append("callbackUrl", nextUrl.href);
           return Response.redirect(redirectUrl);
         } else {
           return true;
@@ -152,7 +152,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       if (
         isLoggedIn &&
-        ["/sign-in", "/sign-up", "/storesignin", "/storesignup", "/signin","/signup",].some((path) =>
+        ["/sign-in", "/sign-up", "/storesignin", "/storesignup", "/signin", "/signup",].some((path) =>
 
           nextUrl.pathname.startsWith(path)
         )
@@ -160,7 +160,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return Response.redirect(new URL("/chatwithwoodata", nextUrl.origin));
       }
 
-      const authAllowedPaths = ["/role-menu", "/settings", "/not-authorized","/Theme"];
+      const authAllowedPaths = ["/role-menu", "/settings", "/not-authorized", "/Theme"];
 
       const isAuthAllowedPaths = authAllowedPaths.some((path) =>
         nextUrl.pathname.startsWith(path)
@@ -183,79 +183,79 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return true;
     },
- async signIn({ user, account }) {
-  const provider = account?.provider;
+    async signIn({ user, account }) {
+      const provider = account?.provider;
 
-  // Allow credentials login
-  if (provider === "credentials") return true;
+      // Allow credentials login
+      if (provider === "credentials") return true;
 
-  // Only Google & GitHub reach here
-  if (!user.email) return false;
+      // Only Google & GitHub reach here
+      if (!user.email) return false;
 
-  const { data: dbUser } = await postgrest
-    .asAdmin()
-    .from("user_catalog")
-    .select("*")
-    .eq("user_email", user.email)
-    .maybeSingle();
+      const { data: dbUser } = await postgrest
+        .asAdmin()
+        .from("user_catalog")
+        .select("*")
+        .eq("user_email", user.email)
+        .maybeSingle();
 
-  // ❌ Block if user not registered
-  if (!dbUser) return false;
+      // ❌ Block if user not registered
+      if (!dbUser) return false;
 
-  // 🔐 Role enforcement
-  const roles = Array.isArray(dbUser.roles_json)
-    ? dbUser.roles_json
-    : JSON.parse(dbUser.roles_json || "[]");
+      // 🔐 Role enforcement
+      const roles = Array.isArray(dbUser.roles_json)
+        ? dbUser.roles_json
+        : JSON.parse(dbUser.roles_json || "[]");
 
-  if (!roles.includes("Store Manager")) return false;
+      if (!roles.includes("Store Manager")) return false;
 
-  // ✅ Attach DB user for jwt()
-  (user as any).__dbUser = dbUser;
+      // ✅ Attach DB user for jwt()
+      (user as any).__dbUser = dbUser;
 
-  return true;
-}
-
-,
-
-   jwt: async ({ token, user }) => {
-  if (user) {
-    const u = user as any;
-
-    // ✅ GitHub login
-    if (u.__dbUser) {
-      const userSessionDTO = getUserSessionDTO(u.__dbUser);
-      const allowedPaths = await getAllowedPaths(userSessionDTO);
-
-      token.user = {
-        ...userSessionDTO,
-        allowedPaths,
-      };
-    }
-    // ✅ Credentials login (unchanged)
-    else {
-      token.user = u;
+      return true;
     }
 
-    token.id = token.user?.id;
-    token.randomKey = token.user?.randomKey;
-  }
+    ,
 
-  return token;
-},
+    jwt: async ({ token, user }) => {
+      if (user) {
+        const u = user as any;
+
+        // ✅ GitHub login
+        if (u.__dbUser) {
+          const userSessionDTO = getUserSessionDTO(u.__dbUser);
+          const allowedPaths = await getAllowedPaths(userSessionDTO);
+
+          token.user = {
+            ...userSessionDTO,
+            allowedPaths,
+          };
+        }
+        // ✅ Credentials login (unchanged)
+        else {
+          token.user = u;
+        }
+
+        token.id = token.user?.id;
+        token.randomKey = token.user?.randomKey;
+      }
+
+      return token;
+    },
 
     session({ session, token }) {
-     return {
-  ...(session || {}), // Prevents spreading undefined
+      return {
+        ...(session || {}), // Prevents spreading undefined
         user: {
           ...(session?.user || {}),
           ...(token?.user || {}),
           id: token?.id as string,
           randomKey: token?.randomKey,
-          
+
         },
       };
 
     },
   },
-  
+
 });
